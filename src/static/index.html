@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>PipelineGPT</title>
+  <style>
+    /* CSS styles for the UI */
+    body {
+      font-family: Arial, sans-serif;
+    }
+    
+    .container {
+      margin: 20px;
+    }
+    
+    .code-editor {
+      width: 100%;
+      height: 200px;
+      border: 1px solid #ccc;
+      padding: 5px;
+    }
+    
+    .run-button {
+      margin-top: 10px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>PipelineGPT</h1>
+    <p>Generate <a href="https://semaphoreci.com">Semaphore</a> CI/CD pipelines. For experimental purposes only — <strong>do not use in production.</strong></p>
+    <textarea id="textarea-prompt" style="height: 10vh;" class="code-editor" placeholder="Enter your prompt">Write a CI pipeline that builds a Docker image and pushes it to Docker Hub.</textarea>
+    <button id="run-button" class="run-button">⏎ Run</button>
+    <button id="clear-button" class="run-button">⌫ Clear</button>
+  </div>
+  <div class="container">
+    <textarea id="textarea-response" class="code-editor" style="height: 50vh;" readonly="true" placeholder=""></textarea>
+  </div>
+
+  <script>
+
+    document.getElementById('clear-button').addEventListener('click', function() {
+        textarea_prompt = document.getElementById('textarea-prompt');
+        textarea_prompt.value = "";
+    })
+
+    // JavaScript code for handling the button click event
+    document.getElementById('run-button').addEventListener('click', function() {
+      var prompt = document.getElementById('textarea-prompt').value;
+      var requestBody = {
+        prompt: prompt
+      };
+
+      if(prompt === '') {
+        return;
+      }
+
+      btn_run = document.getElementById('run-button');
+      btn_clear = document.getElementById('clear-button');
+      textarea_response = document.getElementById('textarea-response');
+
+      btn_run.disabled = true;
+      btn_run.innerText = "Working...";
+      btn_clear.disabled = true;
+      textarea_response.value = "This might a while..."
+      
+      fetch('/complete', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(requestBody)
+      })
+      .then(function(response) {
+        return response.json();
+      })
+      .then(function(data) {
+        console.log(data);
+        if(data.ok) {
+            textarea_response.value = data.completion;
+        }
+        else {
+            textarea_response.value = data.status;
+        }
+      })
+      .catch(function(error) {
+        console.error(error);
+        textarea_response.value = error;
+      })
+      .finally(function() {
+        btn_run.disabled = false;
+        btn_run.innerText = "⏎ Run";
+        btn_clear.disabled = false;
+      });
+    });
+  </script>
+</body>
+</html>

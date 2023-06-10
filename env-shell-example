@@ -1,0 +1,9 @@
+# Get them from your Pinecone account dashboard
+export PINECONE_API_KEY=VALUE
+export PINECONE_ENVIRONMENT=VALUE
+
+# Get them from your OpenAI account
+export OPENAI_API_KEY=VALUE
+
+# Flask entrypoint
+export FLASK_APP=src/app.py

@@ -1,0 +1,6 @@
+# Get them from your Pinecone account dashboard
+PINECONE_API_KEY=VALUE
+PINECONE_ENVIRONMENT=VALUE
+
+# Get them from your OpenAI account
+OPENAI_API_KEY=VALUE
