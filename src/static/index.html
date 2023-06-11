@@ -71,7 +71,13 @@
         body: JSON.stringify(requestBody)
       })
       .then(function(response) {
-        return response.json();
+        var contentType = response.headers.get('Content-Type');
+        if (contentType && contentType.includes('application/json')) {
+          return response.json();
+        }
+        else {
+          textarea_response.value = "ERROR: unexpected server response."
+        }
       })
       .then(function(data) {
         console.log(data);
