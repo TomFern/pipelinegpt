@@ -53,21 +53,18 @@ def complete():
         return jsonify(res), 400
     
 
-
-
-# import pinecone
 import os
 import tiktoken
 import openai
 
-# # Pinecone database name, number of matched to retrieve
-# # cutoff similarity score, and how much tokens as context
+# Pinecone database name, number of matched to retrieve
+# cutoff similarity score, and how much tokens as context
 index_name = 'semaphore'
 context_cap_per_query = 30
 match_min_score = 0.75
 context_tokens_per_query = 3000
 
-# # OpenAI LLM model parameters
+# OpenAI LLM model parameters
 chat_engine_model = "gpt-3.5-turbo"
 max_tokens_model = 4000
 temperature = 0.2 
@@ -100,8 +97,6 @@ def num_tokens_from_messages(messages):
     num_tokens += 2  # every reply is primed with <im_start>assistant
     return num_tokens
 
-
-# from pinecone import pinecone
         
 def get_context(query: str, max_tokens: int) -> list:
     """Generate message for OpenAI model. Add context until hitting `context_token_limit` limit. Returns prompt string."""
@@ -140,8 +135,6 @@ def get_context(query: str, max_tokens: int) -> list:
         if token_count < context_tokens_per_query:
             usable_context = usable_context + '\n---\n' + context 
             context_count = context_count + 1
-
-    # print(f"Found {context_count} contexts for your query")
 
     return usable_context
 

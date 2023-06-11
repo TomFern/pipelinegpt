@@ -1,8 +1,12 @@
-# PipelineGPT
+# PipelineGPT 
 
-Generates Semaphore pipelines using OpenAI GPT-3
+**Experimental** — this is for learning purposes only — do not use in production.
 
-**Experimental**
+Generates Semaphore pipelines using OpenAI GPT-3 with embeddings.
+
+## Prerequisites
+
+Requires setting up a Pinecone database with embeddings. For more instructions, follow the README at [tomfern/semaphore-demo-pipelinegpt](https://github.com/TomFern/semaphore-demo-pipelinegpt).
 
 ## Run locally
 
